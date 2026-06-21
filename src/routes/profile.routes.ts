@@ -14,7 +14,7 @@ import { validatePaginationProps, validateUsername } from "@/middlewares/validat
 export const profileRouter = Router();
 
 /**
- * POST /analyze/:username - Analyze and cache a GitHub profile
+ * GET /analyze/:username - Analyze and cache a GitHub profile
  */
 profileRouter.get("/analyze/:username", validateUsername, analyzeGithubProfile);
 

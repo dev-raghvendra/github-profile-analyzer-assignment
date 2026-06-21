@@ -144,17 +144,50 @@ Fetches and analyzes a GitHub user profile, storing results in the database.
 
 **Parameters:**
 - `username` (string): GitHub username to analyze
+- `force` (query, optional): Force refresh from GitHub API (boolean)
 
 **Response:**
 ```json
 {
-  "id": 1,
-  "username": "torvalds",
-  "followers": 210000,
-  "public_repos": 15,
-  "profile_url": "https://github.com/torvalds",
-  "created_at": "2024-01-01T12:00:00Z",
-  "updated_at": "2024-06-21T15:30:00Z"
+  "code": 200,
+  "message": "GitHub profile found and analyzed",
+  "data": {
+    "githubId": 1,
+    "username": "octocat",
+    "name": "The Octocat",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/1?v=4",
+    "profileUrl": "https://github.com/octocat",
+    "bio": "There once was...",
+    "company": "GitHub",
+    "location": "San Francisco",
+    "blog": "https://github.blog",
+    "twitterUsername": "octocat",
+    "email": null,
+    "hireable": null,
+    "stats": {
+      "publicRepos": 2,
+      "publicGists": 8,
+      "followers": 3938,
+      "following": 9,
+      "followerFollowingRatio": 437.56
+    },
+    "insights": {
+      "totalStars": 4520,
+      "totalForks": 1890,
+      "totalWatchers": 2340,
+      "topLanguage": "JavaScript",
+      "languageBreakdown": {"JavaScript": 45, "Python": 30, "Go": 25},
+      "mostStarredRepo": "Hello-World",
+      "mostStarredRepoStars": 3000,
+      "accountAgeDays": 5000,
+      "activityScore": 8.5
+    },
+    "githubCreatedAt": "2011-01-26T19:01:12Z",
+    "githubUpdatedAt": "2024-01-15T12:00:00Z",
+    "analyzedAt": "2024-01-15T12:00:00Z",
+    "createdAt": "2024-01-15T12:00:00Z",
+    "updatedAt": "2024-01-15T12:00:00Z"
+  }
 }
 ```
 
@@ -246,13 +279,45 @@ Retrieves a previously cached GitHub profile from the database.
 **Response:**
 ```json
 {
-  "id": 1,
-  "username": "torvalds",
-  "followers": 210000,
-  "public_repos": 15,
-  "profile_url": "https://github.com/torvalds",
-  "created_at": "2024-01-01T12:00:00Z",
-  "updated_at": "2024-06-21T15:30:00Z"
+  "code": 200,
+  "message": "GitHub profile found",
+  "data": {
+    "githubId": 1,
+    "username": "octocat",
+    "name": "The Octocat",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/1?v=4",
+    "profileUrl": "https://github.com/octocat",
+    "bio": "There once was...",
+    "company": "GitHub",
+    "location": "San Francisco",
+    "blog": "https://github.blog",
+    "twitterUsername": "octocat",
+    "email": null,
+    "hireable": null,
+    "stats": {
+      "publicRepos": 2,
+      "publicGists": 8,
+      "followers": 3938,
+      "following": 9,
+      "followerFollowingRatio": 437.56
+    },
+    "insights": {
+      "totalStars": 4520,
+      "totalForks": 1890,
+      "totalWatchers": 2340,
+      "topLanguage": "JavaScript",
+      "languageBreakdown": {"JavaScript": 45, "Python": 30, "Go": 25},
+      "mostStarredRepo": "Hello-World",
+      "mostStarredRepoStars": 3000,
+      "accountAgeDays": 5000,
+      "activityScore": 8.5
+    },
+    "githubCreatedAt": "2011-01-26T19:01:12Z",
+    "githubUpdatedAt": "2024-01-15T12:00:00Z",
+    "analyzedAt": "2024-01-15T12:00:00Z",
+    "createdAt": "2024-01-15T12:00:00Z",
+    "updatedAt": "2024-01-15T12:00:00Z"
+  }
 }
 ```
 
@@ -277,7 +342,11 @@ Removes a cached GitHub profile from the database.
 **Response:**
 ```json
 {
-  "message": "Profile deleted successfully"
+  "code": 204,
+  "message": "GitHub profile deleted successfully",
+  "data": {
+    "username": "octocat"
+  }
 }
 ```
 
@@ -374,12 +443,37 @@ Common error codes:
 | Column | Type | Description |
 |--------|------|-------------|
 | id | INT PRIMARY KEY | Auto-incrementing ID |
+| githubId | INT UNIQUE | GitHub user ID |
 | username | VARCHAR(255) UNIQUE | GitHub username |
+| name | VARCHAR(255) | User's full name |
+| avatarUrl | VARCHAR(255) | Avatar image URL |
+| profileUrl | VARCHAR(255) | GitHub profile URL |
+| bio | TEXT | User bio |
+| company | VARCHAR(255) | Company name |
+| location | VARCHAR(255) | Location |
+| blog | VARCHAR(255) | Blog/website URL |
+| twitterUsername | VARCHAR(255) | Twitter handle |
+| email | VARCHAR(255) | Email address |
+| hireable | BOOLEAN | Whether user is hireable |
+| publicRepos | INT | Number of public repositories |
+| publicGists | INT | Number of public gists |
 | followers | INT | Number of followers |
-| public_repos | INT | Number of public repositories |
-| profile_url | VARCHAR(255) | GitHub profile URL |
-| created_at | TIMESTAMP | Record creation time |
-| updated_at | TIMESTAMP | Last update time |
+| following | INT | Number of following |
+| followersToFollowingRatio | DECIMAL | Followers to following ratio |
+| totalStars | INT | Total stars across all repos |
+| totalForks | INT | Total forks across all repos |
+| totalWatchers | INT | Total watchers across all repos |
+| topLanguage | VARCHAR(255) | Most used programming language |
+| languageBreakdown | JSON | Breakdown of languages used |
+| mostStarredRepo | VARCHAR(255) | Name of most starred repository |
+| mostStarredRepoStars | INT | Stars on most starred repo |
+| accountAgeDays | INT | Age of GitHub account in days |
+| activityScore | DECIMAL | Calculated activity score |
+| githubCreatedAt | TIMESTAMP | GitHub account creation date |
+| githubUpdatedAt | TIMESTAMP | GitHub profile last updated |
+| analyzedAt | TIMESTAMP | When profile was analyzed |
+| createdAt | TIMESTAMP | Record creation time |
+| updatedAt | TIMESTAMP | Last update time |
 
 ## Development
 
