@@ -42,7 +42,8 @@ app.get("/health",(_,res)=>{
   res.status(200).json({
     code:200,
     message:"running",
-    source:"server"
+    source:"gateway",
+    uptime:process.uptime()
   })
 })
 app.use("/api/v1/profiles/",apiLimiter, profileRouter);
