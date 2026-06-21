@@ -1,0 +1,219 @@
+{
+  "info": {
+    "name": "GitHub Profile Analyzer API",
+    "description": "API for analyzing and retrieving GitHub user profiles with statistics and insights",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        },
+        "description": "Check if the API is running and view available endpoints"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": ["{{base_url}}"],
+              "path": [""]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"name\": \"GitHub Profile Analyzer API\",\n  \"status\": \"running\",\n  \"docs\": {\n    \"analyze\": \"GET /api/v1/profiles/analyze/:username\",\n    \"getOne\": \"GET /api/v1/profiles/:username\",\n    \"delete\": \"DELETE /api/v1/profiles/:username\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Profiles",
+      "item": [
+        {
+          "name": "Analyze GitHub Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/profiles/analyze/{{username}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "profiles", "analyze", "{{username}}"],
+              "query": [
+                {
+                  "key": "force",
+                  "value": "false",
+                  "description": "Force refresh cache (optional)",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Analyze a GitHub profile and retrieve comprehensive statistics and insights including repos, languages, activity score, and follower analysis"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/profiles/analyze/octocat",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "profiles", "analyze", "octocat"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"code\": 200,\n  \"data\": {\n    \"githubId\": 1,\n    \"username\": \"octocat\",\n    \"name\": \"The Octocat\",\n    \"avatarUrl\": \"https://avatars.githubusercontent.com/u/1?v=4\",\n    \"profileUrl\": \"https://github.com/octocat\",\n    \"bio\": \"There once was...\",\n    \"company\": \"GitHub\",\n    \"location\": \"San Francisco\",\n    \"blog\": \"https://github.blog\",\n    \"twitterUsername\": \"octocat\",\n    \"email\": null,\n    \"hireable\": null,\n    \"stats\": {\n      \"publicRepos\": 2,\n      \"publicGists\": 8,\n      \"followers\": 3938,\n      \"following\": 9,\n      \"followerFollowingRatio\": 437.56\n    },\n    \"insights\": {\n      \"totalStars\": 4520,\n      \"totalForks\": 1890,\n      \"totalWatchers\": 2340,\n      \"topLanguage\": \"JavaScript\",\n      \"languageBreakdown\": {\"JavaScript\": 45, \"Python\": 30, \"Go\": 25},\n      \"mostStarredRepo\": \"Hello-World\",\n      \"mostStarredRepoStars\": 3000,\n      \"accountAgeDays\": 5000,\n      \"activityScore\": 8.5\n    },\n    \"githubCreatedAt\": \"2011-01-26T19:01:12Z\",\n    \"githubUpdatedAt\": \"2024-01-15T12:00:00Z\",\n    \"analyzedAt\": \"2024-01-15T12:00:00Z\",\n    \"createdAt\": \"2024-01-15T12:00:00Z\",\n    \"updatedAt\": \"2024-01-15T12:00:00Z\"\n  },\n  \"message\": \"Github Profile Found\"\n}"
+            },
+            {
+              "name": "Invalid Username",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/profiles/analyze/invalid-user-12345",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "profiles", "analyze", "invalid-user-12345"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"code\": 404,\n  \"message\": \"GitHub profile not found\",\n  \"error\": \"User not found\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get GitHub Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/profiles/{{username}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "profiles", "{{username}}"]
+            },
+            "description": "Retrieve a previously analyzed GitHub profile from cache"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/profiles/octocat",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "profiles", "octocat"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"code\": 200,\n  \"data\": {\n    \"githubId\": 1,\n    \"username\": \"octocat\",\n    \"name\": \"The Octocat\",\n    \"avatarUrl\": \"https://avatars.githubusercontent.com/u/1?v=4\",\n    \"profileUrl\": \"https://github.com/octocat\",\n    \"bio\": \"There once was...\",\n    \"company\": \"GitHub\",\n    \"location\": \"San Francisco\",\n    \"blog\": \"https://github.blog\",\n    \"twitterUsername\": \"octocat\",\n    \"email\": null,\n    \"hireable\": null,\n    \"stats\": {\n      \"publicRepos\": 2,\n      \"publicGists\": 8,\n      \"followers\": 3938,\n      \"following\": 9,\n      \"followerFollowingRatio\": 437.56\n    },\n    \"insights\": {\n      \"totalStars\": 4520,\n      \"totalForks\": 1890,\n      \"totalWatchers\": 2340,\n      \"topLanguage\": \"JavaScript\",\n      \"languageBreakdown\": {\"JavaScript\": 45, \"Python\": 30, \"Go\": 25},\n      \"mostStarredRepo\": \"Hello-World\",\n      \"mostStarredRepoStars\": 3000,\n      \"accountAgeDays\": 5000,\n      \"activityScore\": 8.5\n    },\n    \"githubCreatedAt\": \"2011-01-26T19:01:12Z\",\n    \"githubUpdatedAt\": \"2024-01-15T12:00:00Z\",\n    \"analyzedAt\": \"2024-01-15T12:00:00Z\",\n    \"createdAt\": \"2024-01-15T12:00:00Z\",\n    \"updatedAt\": \"2024-01-15T12:00:00Z\"\n  },\n  \"message\": \"Github Profile Found\"\n}"
+            },
+            {
+              "name": "Profile Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/profiles/octocat",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "profiles", "octocat"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Profile not found in cache\",\n  \"error\": \"Please analyze the profile first\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete GitHub Profile",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/profiles/{{username}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "profiles", "{{username}}"]
+            },
+            "description": "Delete a cached GitHub profile from the database"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/profiles/octocat",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "profiles", "octocat"]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": "{\n  \"code\": 204,\n  \"data\": {\n    \"username\": \"octocat\"\n  },\n  \"message\": \"Github Profile Found\"\n}"
+            },
+            {
+              "name": "Profile Not Found",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/profiles/nonexistent-user",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "profiles", "nonexistent-user"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Profile not found\",\n  \"error\": \"Cannot delete non-existent profile\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "username",
+      "value": "octocat",
+      "type": "string"
+    }
+  ]
+}
