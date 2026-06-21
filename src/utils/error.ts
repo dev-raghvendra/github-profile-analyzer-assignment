@@ -46,7 +46,6 @@ export class ServerError implements ApiError {
 export function handleGithubApiError(error:AxiosError):never{
    if(error.response){
      const status = error.response.status;
-     console.log(error)
      if(status === 404){
          throw new GithubApiError("User not found", 404);
      }

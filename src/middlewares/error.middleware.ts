@@ -44,7 +44,6 @@ export function errorHandler(err:any,req:PopulatedRequest,res:Response,next:Next
         message:"[ServerError]: Internal Server Error",
         source:"unknown"
     })
-    console.log(err.cause)
     logger.err(`[UNEXPECT_ERR_OCCURED] : ${JSON.stringify(err,null,2)}`)
 }
 export function routeNotFoundHandler(req:PopulatedRequest,res:Response){
