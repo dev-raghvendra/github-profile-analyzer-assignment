@@ -38,6 +38,13 @@ app.get("/",(_, res) => {
     },
   });
 })
+app.get("/health",(_,res)=>{
+  res.status(200).json({
+    code:200,
+    message:"running",
+    source:"server"
+  })
+})
 app.use("/api/v1/profiles/",apiLimiter, profileRouter);
 app.use(errorHandler);
 app.use(routeNotFoundHandler)
