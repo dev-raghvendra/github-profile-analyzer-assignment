@@ -127,6 +127,7 @@ Returns API documentation with available endpoints.
   "status": "running",
   "docs": {
     "analyze": "GET /api/v1/profiles/analyze/:username",
+    "list": "GET /api/v1/profiles/list",
     "getOne": "GET /api/v1/profiles/:username",
     "delete": "DELETE /api/v1/profiles/:username"
   }
@@ -161,6 +162,73 @@ Fetches and analyzes a GitHub user profile, storing results in the database.
 - `200`: Profile successfully analyzed and stored
 - `400`: Invalid username format
 - `404`: User not found on GitHub
+- `429`: Rate limit exceeded
+- `500`: Server error
+
+### List GitHub Profiles
+
+```
+GET /api/v1/profiles/list
+```
+
+Retrieves a paginated list of all cached GitHub profiles from the database.
+
+**Query Parameters:**
+- `page` (number, required): Page number for pagination (default: 1)
+- `per_page` (number, required): Number of profiles per page (default: 10)
+
+**Response:**
+```json
+{
+  "code": 200,
+  "message": "Profiles found",
+  "profiles": [
+    {
+      "githubId": 1,
+      "username": "octocat",
+      "name": "The Octocat",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1?v=4",
+      "profileUrl": "https://github.com/octocat",
+      "bio": "There once was...",
+      "company": "GitHub",
+      "location": "San Francisco",
+      "blog": "https://github.blog",
+      "twitterUsername": "octocat",
+      "email": null,
+      "hireable": null,
+      "stats": {
+        "publicRepos": 2,
+        "publicGists": 8,
+        "followers": 3938,
+        "following": 9,
+        "followerFollowingRatio": 437.56
+      },
+      "insights": {
+        "totalStars": 4520,
+        "totalForks": 1890,
+        "totalWatchers": 2340,
+        "topLanguage": "JavaScript",
+        "languageBreakdown": {"JavaScript": 45, "Python": 30, "Go": 25},
+        "mostStarredRepo": "Hello-World",
+        "mostStarredRepoStars": 3000,
+        "accountAgeDays": 5000,
+        "activityScore": 8.5
+      },
+      "githubCreatedAt": "2011-01-26T19:01:12Z",
+      "githubUpdatedAt": "2024-01-15T12:00:00Z",
+      "analyzedAt": "2024-01-15T12:00:00Z",
+      "createdAt": "2024-01-15T12:00:00Z",
+      "updatedAt": "2024-01-15T12:00:00Z"
+    }
+  ],
+  "perPage": 10,
+  "nextPage": 2
+}
+```
+
+**Status Codes:**
+- `200`: Profiles retrieved successfully
+- `400`: Invalid pagination parameters
 - `429`: Rate limit exceeded
 - `500`: Server error
 

@@ -102,6 +102,63 @@
           ]
         },
         {
+          "name": "List GitHub Profiles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/profiles/list?page=1&per_page=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "profiles", "list"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (required)"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of profiles per page (required)"
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of all cached GitHub profiles"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/profiles/list?page=1&per_page=10",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "profiles", "list"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"code\": 200,\n  \"message\": \"Profiles found\",\n  \"profiles\": [\n    {\n      \"githubId\": 1,\n      \"username\": \"octocat\",\n      \"name\": \"The Octocat\",\n      \"avatarUrl\": \"https://avatars.githubusercontent.com/u/1?v=4\",\n      \"profileUrl\": \"https://github.com/octocat\",\n      \"bio\": \"There once was...\",\n      \"company\": \"GitHub\",\n      \"location\": \"San Francisco\",\n      \"blog\": \"https://github.blog\",\n      \"twitterUsername\": \"octocat\",\n      \"email\": null,\n      \"hireable\": null,\n      \"stats\": {\n        \"publicRepos\": 2,\n        \"publicGists\": 8,\n        \"followers\": 3938,\n        \"following\": 9,\n        \"followerFollowingRatio\": 437.56\n      },\n      \"insights\": {\n        \"totalStars\": 4520,\n        \"totalForks\": 1890,\n        \"totalWatchers\": 2340,\n        \"topLanguage\": \"JavaScript\",\n        \"languageBreakdown\": {\"JavaScript\": 45, \"Python\": 30, \"Go\": 25},\n        \"mostStarredRepo\": \"Hello-World\",\n        \"mostStarredRepoStars\": 3000,\n        \"accountAgeDays\": 5000,\n        \"activityScore\": 8.5\n      },\n      \"githubCreatedAt\": \"2011-01-26T19:01:12Z\",\n      \"githubUpdatedAt\": \"2024-01-15T12:00:00Z\",\n      \"analyzedAt\": \"2024-01-15T12:00:00Z\",\n      \"createdAt\": \"2024-01-15T12:00:00Z\",\n      \"updatedAt\": \"2024-01-15T12:00:00Z\"\n    }\n  ],\n  \"perPage\": 10,\n  \"nextPage\": 2\n}"
+            }
+          ]
+        },
+        {
           "name": "Get GitHub Profile",
           "request": {
             "method": "GET",
