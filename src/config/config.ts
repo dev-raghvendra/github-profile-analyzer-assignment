@@ -8,6 +8,6 @@ export const CONFIG = {
 } as const
 
 export const SECRETS = {
-    DATABASE_URL: process.env.DATABASE_URL || "postgresql://postgres:password@localhost:5432/github_profile_analyzer",
+    DATABASE_URL: process.env.DATABASE_URL || "mysql://root:root@localhost:3306/github_analyzer",
     GITHUB_TOKEN: process.env.GITHUB_TOKEN || "ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 } as const
