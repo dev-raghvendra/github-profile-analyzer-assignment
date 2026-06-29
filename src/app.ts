@@ -36,7 +36,7 @@ const apiLimiter = rateLimit({
 app.use(express.json());
 app.use(cors());
 app.use(morgan(CONFIG.ENV === "dev" ? "dev" : "combined"));
-app.use(()=>console.log("REQ_RECEIVED",Date.now())
+app.get("/",()=>console.log("REQ_RECEIVED"))
 
 /**
  * Health check and API documentation endpoint
